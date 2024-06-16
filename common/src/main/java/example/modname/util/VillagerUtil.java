@@ -1,4 +1,4 @@
-package example.modname.util;
+package example.pizzeria.util;
 
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;

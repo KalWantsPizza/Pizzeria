@@ -1,4 +1,4 @@
-package example.modname.registry;
+package example.pizzeria.registry;
 
 public class TagRegistry {
 }

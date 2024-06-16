@@ -1,4 +1,4 @@
-package example.modname.registry;
+package example.pizzeria.registry;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;

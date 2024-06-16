@@ -1,4 +1,4 @@
-package example.modname.util.api;
+package example.pizzeria.util.api;
 
 import com.mojang.datafixers.util.Pair;
 import de.cristelknight.doapi.api.DoApiAPI;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 @DoApiPlugin
-public class ModnameDoApi implements DoApiAPI {
+public class pizzeriaDoApi implements DoApiAPI {
 
     @Override
     public void registerBlocks(Set<Block> blocks) {

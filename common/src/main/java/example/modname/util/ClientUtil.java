@@ -1,4 +1,4 @@
-package example.modname.util;
+package example.pizzeria.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;

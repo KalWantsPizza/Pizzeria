@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "modname",
+  "id": "pizzeria",
   "version": "${version}",
-  "name": "Modname",
+  "name": "pizzeria",
   "description": "Your Description",
   "authors": [
     "Your Name"
@@ -16,18 +16,18 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "example.modname.fabric.ModnameFabric"
+      "example.pizzeria.fabric.pizzeriaFabric"
     ],
     "client": [
-      "example.modname.fabric.ModnameClientFabric"
+      "example.pizzeria.fabric.pizzeriaClientFabric"
     ],
     "doapi": [
-      "example.modname.util.api.ModnameDoApi"
+      "example.pizzeria.util.api.pizzeriaDoApi"
     ]
   },
   "mixins": [
-    "modname.mixins.json",
-    "modname-common.mixins.json"
+    "pizzeria.mixins.json",
+    "pizzeria-common.mixins.json"
   ],
   "depends": {
     "fabric-api": "*",

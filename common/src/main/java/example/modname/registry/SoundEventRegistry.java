@@ -1,19 +1,19 @@
-package example.modname.registry;
+package example.pizzeria.registry;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
-import example.modname.Modname;
-import example.modname.ModnameIdentifier;
+import example.pizzeria.pizzeria;
+import example.pizzeria.pizzeriaIdentifier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
 public class SoundEventRegistry {
-    private static final Registrar<SoundEvent> SOUND_EVENTS = DeferredRegister.create(Modname.MOD_ID, Registries.SOUND_EVENT).getRegistrar();
+    private static final Registrar<SoundEvent> SOUND_EVENTS = DeferredRegister.create(pizzeria.MOD_ID, Registries.SOUND_EVENT).getRegistrar();
 
     private static RegistrySupplier<SoundEvent> create(String name) {
-        final ResourceLocation id = new ModnameIdentifier(name);
+        final ResourceLocation id = new pizzeriaIdentifier(name);
         return SOUND_EVENTS.register(id, () -> SoundEvent.createVariableRangeEvent(id));
     }
 

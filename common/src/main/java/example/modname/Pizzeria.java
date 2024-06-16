@@ -1,12 +1,12 @@
-package example.modname;
+package example.pizzeria;
 
 import de.cristelknight.doapi.DoApiExpectPlatform;
-import example.modname.registry.*;
+import example.pizzeria.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Modname {
+public class pizzeria {
     public static final String MOD_ID = "vinery";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     
@@ -20,7 +20,7 @@ public class Modname {
         RecipeTypesRegistry.init();
         EntityRegistry.init();
         SoundEventRegistry.init();
-        DoApiExpectPlatform.registerBuiltInPack(Modname.MOD_ID, new ModnameIdentifier("exampleresourcepack"), false);
+        DoApiExpectPlatform.registerBuiltInPack(pizzeria.MOD_ID, new pizzeriaIdentifier("exampleresourcepack"), false);
     }
 
     public static void commonSetup(){
@@ -29,7 +29,7 @@ public class Modname {
            }
 
     public static ResourceLocation MOD_ID(String path) {
-        return new ResourceLocation(Modname.MOD_ID, path);
+        return new ResourceLocation(pizzeria.MOD_ID, path);
     }
 }
 

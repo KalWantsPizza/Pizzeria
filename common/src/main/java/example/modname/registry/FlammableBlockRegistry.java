@@ -1,4 +1,4 @@
-package example.modname.registry;
+package example.pizzeria.registry;
 
 import de.cristelknight.doapi.DoApiExpectPlatform;
 import net.minecraft.world.level.block.Block;

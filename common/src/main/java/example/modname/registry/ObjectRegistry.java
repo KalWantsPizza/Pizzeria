@@ -1,11 +1,11 @@
-package example.modname.registry;
+package example.pizzeria.registry;
 
 import de.cristelknight.doapi.Util;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrySupplier;
-import example.modname.Modname;
-import example.modname.ModnameIdentifier;
+import example.pizzeria.pizzeria;
+import example.pizzeria.pizzeriaIdentifier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -16,13 +16,13 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
 public class ObjectRegistry {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Modname.MOD_ID, Registries.ITEM);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(pizzeria.MOD_ID, Registries.ITEM);
     public static final Registrar<Item> ITEM_REGISTRAR = ITEMS.getRegistrar();
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Modname.MOD_ID, Registries.BLOCK);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(pizzeria.MOD_ID, Registries.BLOCK);
     public static final Registrar<Block> BLOCK_REGISTRAR = BLOCKS.getRegistrar();
 
     public static void init() {
-        Modname.LOGGER.debug("Registering Mod Block and Items for " + Modname.MOD_ID);
+        pizzeria.LOGGER.debug("Registering Mod Block and Items for " + pizzeria.MOD_ID);
         ITEMS.register();
         BLOCKS.register();
     }
@@ -48,14 +48,14 @@ public class ObjectRegistry {
     }
 
     public static <T extends Block> RegistrySupplier<T> registerWithItem(String name, Supplier<T> block) {
-        return Util.registerWithItem(BLOCKS, BLOCK_REGISTRAR, ITEMS, ITEM_REGISTRAR, new ModnameIdentifier(name), block);
+        return Util.registerWithItem(BLOCKS, BLOCK_REGISTRAR, ITEMS, ITEM_REGISTRAR, new pizzeriaIdentifier(name), block);
     }
 
     public static <T extends Block> RegistrySupplier<T> registerWithoutItem(String path, Supplier<T> block) {
-        return Util.registerWithoutItem(BLOCKS, BLOCK_REGISTRAR, new ModnameIdentifier(path), block);
+        return Util.registerWithoutItem(BLOCKS, BLOCK_REGISTRAR, new pizzeriaIdentifier(path), block);
     }
 
     public static <T extends Item> RegistrySupplier<T> registerItem(String path, Supplier<T> itemSupplier) {
-        return Util.registerItem(ITEMS, ITEM_REGISTRAR, new ModnameIdentifier(path), itemSupplier);
+        return Util.registerItem(ITEMS, ITEM_REGISTRAR, new pizzeriaIdentifier(path), itemSupplier);
     }
 }

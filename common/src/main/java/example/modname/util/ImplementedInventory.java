@@ -1,4 +1,4 @@
-package example.modname.util;
+package example.pizzeria.util;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

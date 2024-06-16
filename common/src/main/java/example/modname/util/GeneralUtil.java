@@ -1,7 +1,7 @@
-package example.modname.util;
+package example.pizzeria.util;
 
 import com.google.gson.JsonArray;
-import example.modname.Modname;
+import example.pizzeria.pizzeria;
 import io.netty.buffer.Unpooled;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -50,7 +50,7 @@ import java.util.*;
 public class GeneralUtil {
 
 	public static ResourceKey<ConfiguredFeature<?, ?>> configuredFeatureKey(String name) {
-		return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Modname.MOD_ID, name));
+		return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(pizzeria.MOD_ID, name));
 	}
 
 	public static Collection<ServerPlayer> tracking(ServerLevel world, BlockPos pos) {

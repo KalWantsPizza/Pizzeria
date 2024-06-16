@@ -1,4 +1,4 @@
-package example.modname.registry;
+package example.pizzeria.registry;
 
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.world.item.Items;
