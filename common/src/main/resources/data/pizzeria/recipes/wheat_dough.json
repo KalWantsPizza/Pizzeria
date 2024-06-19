@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "W": {
+        "tag": "c:crops/wheat"
+        },
+        "Y": {
+        "item": "farm_and_charm:yeast"    
+        }
+    },
+    "pattern": [
+        "WWY"
+        ],
+    "result": {
+        "count": 1,
+        "item": "pizzeria:wheat_dough"
+        }
+    }
