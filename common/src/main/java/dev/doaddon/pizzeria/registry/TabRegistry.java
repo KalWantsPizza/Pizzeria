@@ -12,7 +12,7 @@ import net.minecraft.world.item.Items;
 public class TabRegistry {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(pizzeria.MOD_ID, Registries.CREATIVE_MODE_TAB);
 
-    public static final RegistrySupplier<CreativeModeTab> pizzeria_TAB = CREATIVE_MODE_TABS.register("dev/doaddon/pizzeria", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 1)
+    public static final RegistrySupplier<CreativeModeTab> pizzeria_TAB = CREATIVE_MODE_TABS.register("pizzeria", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 1)
             .icon(() -> new ItemStack(Items.GRASS))
             .title(Component.translatable("creativetab.pizzeria.tab"))
             .displayItems((parameters, out) -> {
