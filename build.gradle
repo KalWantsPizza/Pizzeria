@@ -1,59 +1,190 @@
 plugins {
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.2-SNAPSHOT" apply false
-    id 'io.github.juuxel.loom-vineflower' version '1.11.0' apply false
+    id 'dev.architectury.loom' version '1.6-SNAPSHOT' apply false
+    id 'architectury-plugin' version '3.4-SNAPSHOT'
+    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
+    id "me.modmuss50.mod-publish-plugin" version "0.5.1"
+}
+
+tasks.register("multiplatformDatagen") {
+    Project common = project(":common")
+    Project fabric = project(":fabric")
+    Project forge = project(":forge")
+    dependsOn project(":fabric").tasks.named("runDatagen")
+    // Copy the fabric only recipes to the generated resources
+    File fabricDir = fabric.file("src/main/generated/data/pizzeria/recipes/")
+    File forgeDir = forge.file("src/main/generated/data/pizzeria/recipes/")
+
+    delete(fabricDir)
+    delete(forgeDir)
+
+    copy {
+        from common.file("src/main/generated/data/pizzeria/recipes/.fabric")
+        include "**/*.json"
+        into fabric.file("src/main/generated/data/pizzeria/recipes/")
+    }
+    // Copy the forge only recipes to the generated resources
+    copy {
+        from common.file("src/main/generated/data/pizzeria/recipes/.forge")
+        include "**/*.json"
+        into forge.file("src/main/generated/data/pizzeria/recipes/")
+    }
 }
 
 architectury {
-    minecraft = rootProject.minecraft_version
+    minecraft = project.minecraft_version
+}
+
+allprojects {
+    group = rootProject.maven_group
+    version = rootProject.mod_version
 }
 
 subprojects {
-    apply plugin: "dev.architectury.loom"
-    apply plugin: "io.github.juuxel.loom-vineflower"
+    apply plugin: 'dev.architectury.loom'
+    apply plugin: 'architectury-plugin'
+    apply plugin: 'maven-publish'
+
+    base {
+        archivesName = "$rootProject.archives_name-$project.name"
+    }
 
     loom {
         silentMojangMappingsLicense()
     }
 
-    dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        mappings loom.officialMojangMappings()
-
-    }
-}
-
-
-
-allprojects {
-    apply plugin: "java"
-    apply plugin: "architectury-plugin"
-    apply plugin: "maven-publish"
-
-    archivesBaseName = rootProject.archives_base_name
-    version = rootProject.mod_version
-    group = rootProject.maven_group
-
     repositories {
-        exclusiveContent {
-            forRepository {
+        maven {
+            name "terraform wood api, trinkets"
+            url "https://maven.terraformersmc.com"
+        }
+        maven {
+            name = "Jared's maven"
+            url = "https://maven.blamejared.com/"
+        }
+        repositories {
+            exclusiveContent {
+                forRepository {
+                    maven {
+                        name = "Modrinth"
+                        url = "https://api.modrinth.com/maven"
+                    }
+                }
+                filter {
+                    includeGroup "maven.modrinth"
+                }
                 maven {
-                    name = "Modrinth"
-                    url = "https://api.modrinth.com/maven"
+                    name = "Jared's maven"
+                    url = "https://maven.blamejared.com/"
                 }
             }
-            filter {
-                includeGroup "maven.modrinth"
+            mavenCentral()
+            maven {
+                url "https://oss.sonatype.org/content/repositories/snapshots/"
             }
         }
+
+        maven { name = "Curseforge Maven"; description = "Forge Config API Port"; url = "https://cursemaven.com" }
+        maven { name = "Tterrag Maven"; description = "Create, Forge Registrate & Forge Flywheel"; url = "https://maven.tterrag.com" }
+        maven { name = "JamiesWhiteShirt Maven"; description = "Reach Entity Attributes"; url = "https://maven.jamieswhiteshirt.com/libs-release" }
+        maven { name = "Devos Maven"; description = "Create Fabric, Porting Lib, Forge Tags, Milk Lib & Fabric Registrate"; url = "https://mvn.devos.one/snapshots/" }
+        maven { name = "Jitpack maven"; description = "Mixin Extras & Fabric ASM"; url = "https://jitpack.io/" }
     }
 
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-        options.release = 17
+    dependencies {
+        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
+        mappings loom.officialMojangMappings()
     }
 
     java {
         withSourcesJar()
+
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.release = 17
+    }
+}
+
+
+publishMods {
+    changelog = file("CHANGELOG.md").text.replace("@VERSION@", rootProject.mod_version)
+    type = STABLE
+
+    def optionsCurseforge = curseforgeOptions {
+        accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
+        minecraftVersions.add("1.20.1")
+        projectId = "_"
+        requires {
+            slug = "architectury-api"
+        }
+        requires {
+            slug = "lets-do-farm-charm"
+        }
+    }
+
+    def optionsModrinth = modrinthOptions {
+        accessToken = providers.environmentVariable("MODRINTH_API_KEY")
+        projectId = "_"
+        minecraftVersions.add("1.20.1")
+        requires {
+            slug = "architectury-api"
+        }
+        requires {
+            slug = "lets-do-farm-charm"
+        }
+    }
+
+    curseforge("curseforgeFabric") {
+        from optionsCurseforge
+        modLoaders.add("fabric")
+        modLoaders.add("quilt")
+        file = project(":fabric").tasks.named("remapJar").get().archiveFile
+        displayName = "[Let's Do Addon] Pizzeria ${rootProject.mod_version} Fabric"
+        version = "${rootProject.mod_version}-fabric"
+        optional {
+            slug = "create-fabric"
+        }
+    }
+
+    curseforge("curseforgeForge") {
+        from optionsCurseforge
+        modLoaders.add("forge")
+        modLoaders.add("neoforge")
+        file = project(":forge").tasks.named("remapJar").get().archiveFile
+        displayName = "[Let's Do Addon] Pizzeria ${rootProject.mod_version} Forge"
+        version = "${rootProject.mod_version}-forge"
+        optional {
+            slug = "create"
+        }
+    }
+
+    modrinth("modrinthFabric") {
+        from optionsModrinth
+        modLoaders.add("fabric")
+        modLoaders.add("quilt")
+        file = project(":fabric").tasks.named("remapJar").get().archiveFile
+        displayName = "[Let's Do Addon] Pizzeria ${rootProject.mod_version} Fabric"
+        version = "${rootProject.mod_version}-fabric"
+        optional {
+            slug = "create-fabric"
+        }
+
+        additionalFiles.from(project(":fabric").tasks.named("remapSourcesJar").get().archiveFile)
+    }
+
+    modrinth("modrinthForge") {
+        from optionsModrinth
+        modLoaders.add("forge")
+        modLoaders.add("neoforge")
+        file = project(":forge").tasks.named("remapJar").get().archiveFile
+        displayName = "[Let's Do Addon] Pizzeria ${rootProject.mod_version} Forge"
+        version = "${rootProject.mod_version}-forge"
+        optional {
+            slug = "create"
+        }
+    }
+
+    additionalFiles.from(project(":forge").tasks.named("remapSourcesJar").get().archiveFile)
 }

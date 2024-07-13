@@ -16,13 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dev.doaddon.pizzeria.fabric.pizzeriaFabric"
+      "dev.doaddon.pizzeria.fabric.PizzeriaFabric"
     ],
     "client": [
-      "dev.doaddon.pizzeria.fabric.pizzeriaClientFabric"
-    ],
-    "doapi": [
-      "dev.doaddon.pizzeria.util.api.pizzeriaDoApi"
+      "dev.doaddon.pizzeria.fabric.PizzeriaClientFabric"
     ]
   },
   "mixins": [

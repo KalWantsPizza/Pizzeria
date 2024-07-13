@@ -2,13 +2,13 @@ package dev.doaddon.pizzeria;
 
 import net.minecraft.resources.ResourceLocation;
 
-public class pizzeriaIdentifier extends ResourceLocation {
+public class PizzeriaIdentifier extends ResourceLocation {
 
-    public pizzeriaIdentifier(String path) {
-        super(pizzeria.MOD_ID, path);
+    public PizzeriaIdentifier(String path) {
+        super(Pizzeria.MOD_ID, path);
     }
 
     public static String asString(String path) {
-        return (pizzeria.MOD_ID + ":" + path);
+        return (Pizzeria.MOD_ID + ":" + path);
     }
 }

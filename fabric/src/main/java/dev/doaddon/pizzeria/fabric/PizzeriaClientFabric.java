@@ -1,12 +1,12 @@
 package dev.doaddon.pizzeria.fabric;
 
-import dev.doaddon.pizzeria.client.pizzeriaClient;
+import dev.doaddon.pizzeria.client.PizzeriaClient;
 import net.fabricmc.api.ClientModInitializer;
 
-public class pizzeriaClientFabric implements ClientModInitializer {
+public class PizzeriaClientFabric implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        pizzeriaClient.preInitClient();
-        pizzeriaClient.onInitializeClient();
+        PizzeriaClient.preInitClient();
+        PizzeriaClient.onInitializeClient();
     }
 }

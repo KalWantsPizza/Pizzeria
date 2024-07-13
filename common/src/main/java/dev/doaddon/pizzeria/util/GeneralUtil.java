@@ -1,7 +1,7 @@
 package dev.doaddon.pizzeria.util;
 
 import com.google.gson.JsonArray;
-import dev.doaddon.pizzeria.pizzeria;
+import dev.doaddon.pizzeria.Pizzeria;
 import io.netty.buffer.Unpooled;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -50,7 +50,7 @@ import java.util.*;
 public class GeneralUtil {
 
 	public static ResourceKey<ConfiguredFeature<?, ?>> configuredFeatureKey(String name) {
-		return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(pizzeria.MOD_ID, name));
+		return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Pizzeria.MOD_ID, name));
 	}
 
 	public static Collection<ServerPlayer> tracking(ServerLevel world, BlockPos pos) {

@@ -1,14 +1,14 @@
 package dev.doaddon.pizzeria.fabric;
 
-import dev.doaddon.pizzeria.pizzeria;
-import dev.doaddon.pizzeria.registry.CompostableRegistry;
+import dev.doaddon.pizzeria.Pizzeria;
+import dev.doaddon.pizzeria.registry.PizzeriaCompostables;
 import net.fabricmc.api.ModInitializer;
 
-public class pizzeriaFabric implements ModInitializer {
+public class PizzeriaFabric implements ModInitializer {
     @Override
     public void onInitialize() {
-        pizzeria.init();
-        CompostableRegistry.registerCompostable();
-        pizzeria.commonSetup();
+        Pizzeria.init();
+        PizzeriaCompostables.registerCompostable();
+        Pizzeria.commonSetup();
     }
 }

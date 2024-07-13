@@ -1,28 +1,27 @@
 package dev.doaddon.pizzeria.forge;
 
 import dev.architectury.platform.forge.EventBuses;
-import dev.doaddon.pizzeria.pizzeria;
-import dev.doaddon.pizzeria.registry.CompostableRegistry;
+import dev.doaddon.pizzeria.Pizzeria;
+import dev.doaddon.pizzeria.registry.PizzeriaCompostables;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 
-@Mod(pizzeria.MOD_ID)
-public class pizzeriaForge {
+@Mod(Pizzeria.MOD_ID)
+public class PizzeriaForge {
 
-    public pizzeriaForge() {
+    public PizzeriaForge() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        EventBuses.registerModEventBus(pizzeria.MOD_ID, modEventBus);
-        PreInit.preInit();
-        pizzeria.init();
+        EventBuses.registerModEventBus(Pizzeria.MOD_ID, modEventBus);
+        Pizzeria.init();
 
         modEventBus.addListener(this::commonSetup);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(CompostableRegistry::registerCompostable);
-        pizzeria.commonSetup();
+        event.enqueueWork(PizzeriaCompostables::registerCompostable);
+        Pizzeria.commonSetup();
     }
 }

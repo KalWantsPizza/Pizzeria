@@ -1,31 +1,34 @@
 architectury {
-    common(rootProject.enabled_platforms.split(","))
-}
-
-loom {
-    accessWidenerPath = file("src/main/resources/pizzeria.accesswidener")
-}
-
-repositories {
+    common rootProject.enabled_platforms.split(',')
 }
 
 dependencies {
-    modImplementation( "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}")
-            { exclude group: 'net.fabricmc', module: 'fabric-loader' }
-    modApi ("dev.architectury:architectury:${rootProject.architectury_version}")
-            { exclude group: 'net.fabricmc', module: 'fabric-loader' }
+    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
+    // which get remapped to the correct annotations on each platform.
+    // Do NOT use other classes from Fabric Loader.
+    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
-    modImplementation "maven.modrinth:do-api:${project.doapi_version}-fabric"
+    // Architectury API. This is optional, and you can comment it out if you don't need it.
+    modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
+
+    modImplementation "maven.modrinth:do-api:${project.doapi_version}"
+    modImplementation "maven.modrinth:lets-do-farm-charm:${project.farm_and_charm_version}"
+
+    modImplementation("com.simibubi.create:create-fabric-${project.minecraft_version}:${project.create_fabric_version}+mc${project.minecraft_version}")
 }
 
-publishing {
-    publications {
-        mavenCommon(MavenPublication) {
-            artifactId = rootProject.archives_base_name
-            from components.java
-        }
-    }
+sourceSets {
+    main {
+        // Platform specific generated files
+        resources {
+            srcDirs += [
+                    'src/main/generated'
+            ]
+            exclude ".cache/**"
+            exclude "**/.fabric"
+            exclude "**/.forge"
 
-    repositories {
+        }
     }
 }

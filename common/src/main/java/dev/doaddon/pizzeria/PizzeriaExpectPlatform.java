@@ -1,7 +1,7 @@
 package dev.doaddon.pizzeria;
 
 
-public class pizzeriaExpectPlatform {
+public class PizzeriaExpectPlatform {
 
 
 }

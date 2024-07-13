@@ -1,6 +1,6 @@
 package dev.doaddon.pizzeria.fabric;
 
-public class pizzeriaExpectPlatformImpl {
+public class PizzeriaExpectPlatformImpl {
 
 
 }
